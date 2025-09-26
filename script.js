@@ -7,6 +7,8 @@ const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.querySelector('#start-pause')
 const musicaFocoInput = document.querySelector('#alternar-musica')
+const iniciarOuPausarBt = document.querySelector('#start-pause span')
+
 const musica = new Audio('/sons/luna-rise-part-one.mp3')
 const audioPlay = new Audio('/sons/play.wav');
 const audioPausa = new Audio('/sons/pause.mp3');
@@ -18,7 +20,7 @@ let intervaloId = null
 musica.loop = true
 
 musicaFocoInput.addEventListener('change', () => {
-    if(musica.paused) {
+    if (musica.paused) {
         musica.play()
     } else {
         musica.pause()
@@ -41,7 +43,7 @@ longoBt.addEventListener('click', () => {
 })
 
 function alterarContexto(contexto) {
-    botoes.forEach(function (contexto){
+    botoes.forEach(function (contexto) {
         contexto.classList.remove('active')
     })
     html.setAttribute('data-contexto', contexto)
@@ -56,7 +58,7 @@ function alterarContexto(contexto) {
         case "descanso-curto":
             titulo.innerHTML = `
             Que tal dar uma respirada? <strong class="app__title-strong">Faça uma pausa curta!</strong>
-            ` 
+            `
             break;
         case "descanso-longo":
             titulo.innerHTML = `
@@ -68,8 +70,8 @@ function alterarContexto(contexto) {
 }
 
 const contagemRegressiva = () => {
-    if(tempoDecorridoEmSegundos <= 0){
-        audioTempoFinalizado.play()
+    if (tempoDecorridoEmSegundos <= 0) {
+        //audioTempoFinalizado.play()
         alert('Tempo finalizado!')
         zerar()
         return
@@ -81,17 +83,20 @@ const contagemRegressiva = () => {
 startPauseBt.addEventListener('click', iniciarOuPausar)
 
 function iniciarOuPausar() {
-    if(intervaloId){
+    if (intervaloId) {
         audioPausa.play()
         zerar()
         return
     }
     audioPlay.play()
     intervaloId = setInterval(contagemRegressiva, 1000)
+
+    iniciarOuPausarBt.textContent = "Pausar"
 }
 
 function zerar() {
-    clearInterval(intervaloId) 
+    iniciarOuPausarBt.textContent = "Começar"
+    clearInterval(intervaloId)
     intervaloId = null
 }
 
