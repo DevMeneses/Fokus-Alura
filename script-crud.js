@@ -4,16 +4,15 @@ const textarea = document.querySelector('.app__form-textarea')
 
 const tarefas = []
 
-btnAdicionarTarefa.addEventListener('click', () =>{
+btnAdicionarTarefa.addEventListener('click', () => {
     formAdicionarTarefa.classList.toggle('hidden')
 })
 
 formAdicionarTarefa.addEventListener('submit', (evento) => {
     evento.preventDefault();
     const tarefa = {
-        descricaoTarefa: textarea
+        descricao: textarea.value
     }
     tarefas.push(tarefa)
-    localStorage.setItem('tarefas', tarefas)
-    alert(tarefas)
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
 })
